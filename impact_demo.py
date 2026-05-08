@@ -54,6 +54,24 @@ IMPACT_METRICS = {
     "R8": {"cost": "$30K", "time": "14d", "confidence": "84%", "risk": "MEDIUM"}
 }
 
+CARD_STYLE = {
+    'background': 'rgba(255,255,255,0.96)',
+    'borderRadius': '22px',
+    'boxShadow': '0 18px 40px rgba(15,23,42,0.14)',
+    'border': '1px solid rgba(226,232,240,0.9)',
+    'padding': '22px',
+    'fontFamily': 'Inter'
+}
+
+SECTION_TITLE_STYLE = {
+    'fontSize': '18px',
+    'fontWeight': 700,
+    'color': '#1a202c',
+    'marginBottom': '14px',
+    'paddingBottom': '10px',
+    'borderBottom': '1px solid #e2e8f0'
+}
+
 def create_spider_web(selected=None):
     nodes = list(REQUIREMENTS.keys())
     x_nodes = [SPIDER_POS[n][0] for n in nodes]
@@ -478,90 +496,84 @@ app.layout = html.Div([
 
     html.Div([
         html.Div([
+            html.Div('🕸️ Impact Network Map', style=SECTION_TITLE_STYLE),
             dcc.Graph(
                 id='spider-web',
                 figure=create_spider_web(),
-                style={'height': '860px', 'width': '100%'},
+                style={'height': '820px', 'width': '100%'},
                 config={'displayModeBar': False}
             )
-        ], style={
-            'width': '68%',
-            'display': 'inline-block',
-            'boxShadow': '0 20px 40px rgba(0,0,0,0)'
-        }),
+        ], style=CARD_STYLE)
+    ], style={
+        'width': '68%',
+        'display': 'inline-block',
+        'verticalAlign': 'top'
+    }),
 
         html.Div([
-            html.Div(id='impact-panel',
-                    style={
-                        'marginBottom': 18,
-                        'padding': '20px',
-                        'background': 'linear-gradient(145deg, #ffffff, #f7fafc)',
-                        'borderRadius': '20px',
-                        'boxShadow': '0 20px 40px rgba(0,0,0,0.08)',
-                        'border': '1px solid #e2e8f0',
-                        'fontFamily': 'Inter'
-                    }),
+            html.Div([
+                html.Div('📊 Impact Summary', style=SECTION_TITLE_STYLE),
+                html.Div(id='impact-panel', style={'fontFamily': 'Inter'})
+            ], style={**CARD_STYLE, 'marginBottom': '20px'}),
 
             html.Div([
-                html.H3('💬 AI Assistant',
-                       style={
-                           'color': '#2d3748',
-                           'textAlign': 'center',
-                           'fontFamily': 'Inter',
-                           'fontWeight': 600,
-                           'marginBottom': 20
-                       }),
+                html.Div('💬 AI Assistant', style=SECTION_TITLE_STYLE),
+
                 dcc.Textarea(
                     id='chat-input',
                     placeholder="Ask: 'What if we change R1?' 'Risks?' 'Sustainability impact of R5?'",
                     style={
                         'width': '100%',
-                        'height': 120,
+                        'height': 110,
                         'padding': 16,
                         'borderRadius': 12,
-                        'border': '2px solid #e2e8f0',
+                        'border': '1.5px solid #cbd5e0',
                         'fontFamily': 'Inter',
                         'fontSize': 14,
                         'resize': 'none',
-                        'background': '#f7fafc'
+                        'background': '#f8fafc',
+                        'boxSizing': 'border-box'
                     }
                 ),
-                html.Button('🤖 Analyze with AI', id='chat-btn', n_clicks=0,
-                            style={
-                                'width': '100%',
-                                'padding': 14,
-                                'background': 'linear-gradient(135deg, #4299e1, #3182ce)',
-                                'color': 'white',
-                                'border': 'none',
-                                'borderRadius': 12,
-                                'fontSize': 16,
-                                'fontWeight': 600,
-                                'fontFamily': 'Inter',
-                                'cursor': 'pointer',
-                                'transition': 'all 0.2s',
-                                'boxShadow': '0 4px 14px rgba(66,153,225,0.4)'
-                            }),
-                html.Div(id='chat-response',
-                        style={
-                            'marginTop': 20,
-                            'padding': 25,
-                            'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                            'borderRadius': 16,
-                            'color': 'white',
-                            'minHeight': 120,
-                            'fontFamily': 'Inter',
-                            'fontSize': 15,
-                            'lineHeight': 1.6,
-                            'boxShadow': '0 10px 30px rgba(102,126,234,0.4)'
-                        }),
+
+                html.Button(
+                    '🤖 Analyze with AI',
+                    id='chat-btn',
+                    n_clicks=0,
+                    style={
+                        'width': '100%',
+                        'padding': 14,
+                        'marginTop': '12px',
+                        'background': 'linear-gradient(135deg, #2563eb, #1d4ed8)',
+                        'color': 'white',
+                        'border': 'none',
+                        'borderRadius': 12,
+                        'fontSize': 15,
+                        'fontWeight': 700,
+                        'fontFamily': 'Inter',
+                        'cursor': 'pointer',
+                        'boxShadow': '0 6px 18px rgba(37,99,235,0.35)'
+                    }
+                ),
+
+                html.Div(
+                    id='chat-response',
+                    style={
+                        'marginTop': 18,
+                        'padding': 20,
+                        'background': 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)',
+                        'borderRadius': 16,
+                        'color': 'white',
+                        'minHeight': 110,
+                        'fontFamily': 'Inter',
+                        'fontSize': 14,
+                        'lineHeight': 1.6,
+                        'boxShadow': '0 10px 25px rgba(79,70,229,0.28)'
+                    }
+                ),
+
                 html.Div(id='decision-output')
-            ], style={
-                'padding': '18px',
-                'background': 'linear-gradient(145deg, #ffffff, #f7fafc)',
-                'borderRadius': '20px',
-                'boxShadow': '0 20px 40px rgba(0,0,0,0.08)',
-                'border': '1px solid #e2e8f0'
-            })
+            ], style=CARD_STYLE)
         ], style={
             'width': '30%',
             'display': 'inline-block',
@@ -569,18 +581,7 @@ app.layout = html.Div([
             'paddingLeft': 18,
             'fontFamily': 'Inter'
         })
-    ], style={'padding': '0 60px 60px 60px'}),
-
-    html.Div([
-        html.P('Trustable, Human-in-the-loop AI',
-               style={'textAlign': 'center', 'color': '#171a1f', 'fontFamily': 'Inter'})
-    ], style={'paddingBottom': 40})
-], style={
-    'background': 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-    'minHeight': '100vh',
-    'fontFamily': 'Inter'
-})
-
+])
 @callback(
     [Output('spider-web', 'figure'), Output('impact-panel', 'children')],
     Input('spider-web', 'clickData')
