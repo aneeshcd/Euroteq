@@ -55,12 +55,12 @@ IMPACT_METRICS = {
 }
 
 CARD_STYLE = {
-    'background': 'rgba(255,255,255,0.96)',
+    'background': 'white',
     'borderRadius': '22px',
-    'boxShadow': '0 18px 40px rgba(15,23,42,0.14)',
-    'border': '1px solid rgba(226,232,240,0.9)',
+    'border': '1px solid #CBD5E0',
     'padding': '22px',
-    'fontFamily': 'Inter'
+    'boxSizing': 'border-box',
+    'overflow': 'hidden'
 }
 
 SECTION_TITLE_STYLE = {
